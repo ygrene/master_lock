@@ -91,6 +91,8 @@ module MasterLock
         redis.evalsha(script_hash, keys: keys, argv: argv)
       rescue Redis::CommandError
         redis.eval(script, keys: keys, argv: argv)
+      rescue ArgumentError
+        redis.evalsha(script_hash, keys, argv)
       end
     end
 
